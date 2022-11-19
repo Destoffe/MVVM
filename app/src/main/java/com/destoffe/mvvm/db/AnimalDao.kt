@@ -1,0 +1,21 @@
+package com.destoffe.mvvm.db
+
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface AnimalDao {
+    @Query("SELECT * FROM animal")
+    fun getAll(): LiveData<List<Animal>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(vararg animals: Animal)
+
+    @Delete
+    fun delete(animal: Animal)
+}
