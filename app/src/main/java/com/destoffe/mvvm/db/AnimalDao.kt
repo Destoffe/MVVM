@@ -6,7 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
+import com.destoffe.mvvm.db.entities.Animal
 
 @Dao
 interface AnimalDao {
@@ -14,7 +14,7 @@ interface AnimalDao {
     fun getAll(): LiveData<List<Animal>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(vararg animals: Animal)
+    fun insertAll(vararg animals: Animal)
 
     @Delete
     fun delete(animal: Animal)

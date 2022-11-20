@@ -1,4 +1,4 @@
-package com.destoffe.mvvm.db
+package com.destoffe.mvvm.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

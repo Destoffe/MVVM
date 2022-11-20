@@ -1,8 +1,11 @@
-package com.destoffe.mvvm.db
+package com.destoffe.mvvm
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.destoffe.mvvm.db.entities.Animal
+import com.destoffe.mvvm.db.getDatabase
+import com.destoffe.mvvm.repository.AnimalRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

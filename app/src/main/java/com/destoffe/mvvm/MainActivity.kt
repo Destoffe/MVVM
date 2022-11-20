@@ -16,15 +16,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
-import com.destoffe.mvvm.db.Animal
-import com.destoffe.mvvm.db.AnimalViewModel
+import com.destoffe.mvvm.db.entities.Animal
 import com.destoffe.mvvm.ui.theme.MVVMTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel: AnimalViewModel = ViewModelProvider(this).get(AnimalViewModel::class.java)
-
 
         setContent {
             MVVMTheme {
