@@ -16,13 +16,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import com.destoffe.mvvm.db.entities.Animal
+import com.destoffe.mvvm.navigation.NavHostManager
 import com.destoffe.mvvm.ui.theme.MVVMTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel: AnimalViewModel = ViewModelProvider(this).get(AnimalViewModel::class.java)
+        val viewModel: AnimalViewModel = ViewModelProvider(this)[AnimalViewModel::class.java]
 
         setContent {
             MVVMTheme {
@@ -31,66 +33,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Inputs (viewModel)
+                    MVVMApp(viewModel)
                 }
             }
         }
     }
 }
 
-@Composable
-fun Inputs(
-    viewModel: AnimalViewModel,
-) {
-    var name by remember { mutableStateOf("") }
-    var age by remember { mutableStateOf(0) }
-    val animals: List<Animal> by viewModel.animals.collectAsState(listOf())
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Create an animal")
-        TextField(
-            value = name,
-            onValueChange = { name = it},
-            placeholder = { Text(text = "Name of animal")}
-        )
-        TextField(
-            value = age.toString(),
-            onValueChange = { age = if (it.isBlank()) 0 else it.toInt() },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-            ),
-            placeholder = { Text(text = "Age of animal")}
-        )
-        Button(
-            onClick = { viewModel.addAnimal(Animal(name,age)) }
-        ) {
-            Text(text = "Add animal")
-        }
-        AnimalList(list = animals)
-    }
-}
 
 @Composable
-fun AnimalList(list: List<Animal>){
-    LazyColumn{
-        items(
-            items = list,
-            key = { animals -> animals.id },
-        ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp)
-                ) {
-                    Text(
-                        modifier = Modifier.padding(12.dp),
-                        text = it.name,
-                        textAlign = TextAlign.Center
-                    )
-                }
-        }
-    }
+fun MVVMApp(viewModel: AnimalViewModel) {
+    NavHostManager(viewModel = viewModel)
 }
 
 @Preview(showBackground = true)
